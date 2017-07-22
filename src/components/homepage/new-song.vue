@@ -11,14 +11,16 @@
         <a v-for="(item,index) in contents"
            href="javascript:;"
            class="item"
-           :class="[index===0?'item-cur':'']">
+           :class="[index===0?'item-cur':'']"
+           :data-index="index"
+           @click="changeUrl">
           {{item}}
         </a>
       </div>
       <slider ref="son">
         <div v-for="sub in newSongs">
           <li v-for="item in sub">
-            <a href="javascript:;" class="img">
+            <a :href="item.link" class="img">
                 <img :src="item.albumPic" alt="#">
                 <span class="mask"></span>
                 <i class="icon-play"></i>
@@ -46,7 +48,7 @@
   import {getNewSong} from 'api/getNewSong'
 	import {ERR_OK} from 'api/config'
   import NewSong from 'common/js/newSong'
-  import {splitArr} from 'common/js/dom'
+  import {splitArr,getData,onlyClass} from 'common/js/dom'
 
   export default {
     data(){
@@ -60,11 +62,13 @@
       this._getNewSong();
     },
     methods:{
-      _getNewSong(){
-        getNewSong().then((res)=>{
+      _getNewSong(lang){
+        getNewSong(lang).then((res)=>{
           if(res.code===ERR_OK){
+            if(this.newSongs.length!=0){
+              this.newSongs=[];
+            }
             this.newSongs=this._normalizeSinger(res.data.albumlist);
-            // console.log(this.newSongs);
           }
         })
       },
@@ -79,6 +83,28 @@
         }
         songArr=splitArr(songArr,4);
         return songArr;
+      },
+      changeUrl(e){
+        var lang=getData(e.target,"index");
+        switch(lang){
+          case "0":
+            this._getNewSong(0);
+            break;
+          case "1":
+            this._getNewSong(1)
+            break;
+          case "2":
+            this._getNewSong(5)
+            break;
+          case "3":
+            this._getNewSong(4)
+            break;
+          case "4":
+            this._getNewSong(3)
+            break;
+        }
+        onlyClass(e.target,'item-cur');
+        this.$refs.son.$emit('updated');
       },
       prevSlide(){
           this.$refs.son.$emit('prevEvent');
