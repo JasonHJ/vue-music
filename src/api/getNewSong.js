@@ -4,7 +4,7 @@ import {
   options
 } from './config'
 
-export function getNewSong() {
+export function getNewSong(lang=0) {
   const url = 'https://c.y.qq.com/v8/fcg-bin/album_library'
 
   const data = Object.assign({}, commonParams, {
@@ -16,7 +16,7 @@ export function getNewSong() {
     page:0,
     pagesize:16,
     sort:1,
-    language:0,
+    language:lang,
     genre:0,
     year:1,
     pay:0,

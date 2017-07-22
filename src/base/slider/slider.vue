@@ -50,7 +50,10 @@
           this.slider.refresh()
         })
       },20)
+      this.$on('updated',function () {
+        this.slider.refresh();
 
+      })
     },
     methods:{
       _setSliderWidth(isResize){
@@ -73,7 +76,6 @@
         });
         this.slider.on('scrollEnd',()=>{
           let pageIndex = this.slider.getCurrentPage().pageX;
-          console.log(pageIndex);
           if(this.loop)
             pageIndex -=1;
           this.currentPageIndex=pageIndex;
