@@ -29,7 +29,7 @@
 				</transition>
 			</div>
 			<div class="header-login">
-				<a href="#" class="login">Login</a>
+				<a href="#" class="login">登录</a>
 				<a href="#" class="open-green">开通绿钻豪华版</a>
 				<a href="#" class="open-vip">开通付费包</a>
 			</div>
