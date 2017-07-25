@@ -8,12 +8,12 @@
         </div>
         <div class="carousel">
           <div class="carousel-slider">
-            <a v-for="(item,index) in recommends" :href="item.jumpurl" class="item" :class="'item-pic'+(index+1)" :data-index="index">
+            <a v-for="(item,index) in recommends" :href="item.jumpurl" class="item" :class="carouselArr[index]" :data-index="index">
               <img :src="item.pic">
             </a>
           </div>
           <div class="slider-btns">
-            <span v-for="(item,index) in recommends"
+            <span v-for="(item,index) in carouselArr"
                   :class="{cur:index==curDot}"
                   @click="clickDot"
                   :data-index="index">
@@ -46,7 +46,7 @@
     props:{
       autoPlay:{
         type:Boolean,
-        default:false
+        default:true
       }
     },
     created(){
@@ -68,7 +68,6 @@
           if(ERR_OK===0){
             this.recommends=recommendData(res.data.focus);
             this.carouselArr=this._initcarouselArr(this.recommends);
-
           }
         })
       },
@@ -84,40 +83,26 @@
       prevClick(){
         if(this.t_play){
           this.t_play=false;
-
           this.carouselArr.push(this.carouselArr.shift());
-
-          let list=document.querySelectorAll(".carousel-slider .item")
-          for(let i=0,len=list.length;i<len;i++){
-            removeClass(list[i],this.carouselArr[i-1<0?len-1:i-1]);
-          }
-          for(let i=0,len=list.length;i<len;i++){
-            addClass(list[i],this.carouselArr[i]);
-          }
-          this._setBtn();
+          setTimeout(()=>{
+            this._setBtn();
+          },0)
         }
         setTimeout(()=>{
           this.t_play=true;
-        },1000)
+        },500)
       },
       nextClick(){
         if(this.t_play){
           this.t_play=false;
-
           this.carouselArr.unshift(this.carouselArr.pop());
-
-          let list=document.querySelectorAll(".carousel-slider .item")
-          for(let i=0,len=list.length;i<len;i++){
-            removeClass(list[i],this.carouselArr[i+1>len-1?0:i+1]);
-          }
-          for(let i=0,len=list.length;i<len;i++){
-            addClass(list[i],this.carouselArr[i]);
-          }
-          this._setBtn();
+          setTimeout(()=>{
+            this._setBtn();
+          },0)
         }
         setTimeout(()=>{
           this.t_play=true;
-        },1000)
+        },500)
       },
       //imgClick实现点击前一张和后一张时，不跳转而是进行滚动到正中页面
       _imgClick(){
@@ -135,10 +120,8 @@
       },
       //图片切换时，下面所对应的横杠样式同时切换
       _setBtn(){
-        let len=this.recommends.length;
         let index=getData(document.querySelector(".carousel-slider .item-pic3"),"index");
-        index=index-2<0?index-2+len:index-2;
-        this.curDot=index;
+        this.curDot=index-2<0?index-2+this.recommends.length:index-2;
       },
       clickDot(event){
         this.newArr=this._initcarouselArr(this.recommends);
@@ -146,7 +129,10 @@
         for(let k=1;k<=index;k++){
           this.newArr.unshift(this.newArr.pop())
         }
-
+        this.carouselArr=this.newArr;
+        setTimeout(()=>{
+          this._setBtn();
+        },0)
       },
       //自动播放
       _play(){
