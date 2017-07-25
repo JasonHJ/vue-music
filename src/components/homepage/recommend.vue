@@ -8,18 +8,23 @@
         </div>
         <div class="carousel">
           <div class="carousel-slider">
-            <a v-for="(item,index) in recommends" :href="item.jumpurl" class="item" :class="'item-pic'+(index+1)">
+            <a v-for="(item,index) in recommends" :href="item.jumpurl" class="item" :class="'item-pic'+(index+1)" :data-index="index">
               <img :src="item.pic">
             </a>
           </div>
           <div class="slider-btns">
-            <span v-for="item in recommends" :class="{cur:index==0}"><i></i></span>
+            <span v-for="(item,index) in recommends"
+                  :class="{cur:index==curDot}"
+                  @click="clickDot"
+                  :data-index="index">
+              <i></i>
+            </span>
           </div>
         </div>
       </div>
       <div class="main-operate">
-        <a href="#" class="slider-prev"><i class="icon-sprite"></i></a>
-        <a href="#" class="slider-next"><i class="icon-sprite"></i></a>
+        <a href="javascript:;" class="slider-prev" @click="prevClick"><i class="icon-sprite"></i></a>
+        <a href="javascript:;" class="slider-next" @click="nextClick"><i class="icon-sprite"></i></a>
       </div>
     </div>
 </template>
@@ -28,26 +33,134 @@
   import {getAllData} from 'api/fcg_first'
   import {ERR_OK} from 'api/config'
   import {recommendData} from 'common/js/normalizeData'
+  import {removeClass,addClass,hasClass,getData} from 'common/js/dom'
 
   export default {
     data(){
       return {
-        recommends:[]
+        recommends:[],  //存储获取到的数据
+        carouselArr:[], //将class类名存入其中，方便实现切换class
+        curDot:0
+      }
+    },
+    props:{
+      autoPlay:{
+        type:Boolean,
+        default:false
       }
     },
     created(){
-      this._getAllData()
+      this._getAllData();
+      this.t_play=true;
+    },
+    mounted(){
+      setTimeout(()=>{
+        this._imgClick();
+        if(this.autoPlay){
+          this._play()
+        }
+      },20)
     },
     methods:{
+      //发送请求获取数据
       _getAllData(){
         getAllData().then((res)=>{
           if(ERR_OK===0){
-            this.recommends=recommendData(res.data.focus)
-            console.log(this.recommends)
+            this.recommends=recommendData(res.data.focus);
+            this.carouselArr=this._initcarouselArr(this.recommends);
+
           }
         })
+      },
+      //将数据格式化成需要的形式
+      _initcarouselArr(arr){
+        let newArr=[];
+        for(let i=0;i<arr.length;i++){
+          newArr.push(`item-pic${i+1}`);
+        }
+        return newArr;
+      },
+      //prevClick,nextClick实现左右点击箭头时滚动切换页面
+      prevClick(){
+        if(this.t_play){
+          this.t_play=false;
+
+          this.carouselArr.push(this.carouselArr.shift());
+
+          let list=document.querySelectorAll(".carousel-slider .item")
+          for(let i=0,len=list.length;i<len;i++){
+            removeClass(list[i],this.carouselArr[i-1<0?len-1:i-1]);
+          }
+          for(let i=0,len=list.length;i<len;i++){
+            addClass(list[i],this.carouselArr[i]);
+          }
+          this._setBtn();
+        }
+        setTimeout(()=>{
+          this.t_play=true;
+        },1000)
+      },
+      nextClick(){
+        if(this.t_play){
+          this.t_play=false;
+
+          this.carouselArr.unshift(this.carouselArr.pop());
+
+          let list=document.querySelectorAll(".carousel-slider .item")
+          for(let i=0,len=list.length;i<len;i++){
+            removeClass(list[i],this.carouselArr[i+1>len-1?0:i+1]);
+          }
+          for(let i=0,len=list.length;i<len;i++){
+            addClass(list[i],this.carouselArr[i]);
+          }
+          this._setBtn();
+        }
+        setTimeout(()=>{
+          this.t_play=true;
+        },1000)
+      },
+      //imgClick实现点击前一张和后一张时，不跳转而是进行滚动到正中页面
+      _imgClick(){
+        let pic2=document.querySelector(".carousel-slider")
+        pic2.addEventListener('click',(event)=>{
+          if(hasClass(event.target.parentElement,'item-pic2')){
+            event.preventDefault();
+            this.prevClick();
+          }
+          else if(hasClass(event.target.parentElement,'item-pic4')){
+            event.preventDefault();
+            this.nextClick();
+          }
+        })
+      },
+      //图片切换时，下面所对应的横杠样式同时切换
+      _setBtn(){
+        let len=this.recommends.length;
+        let index=getData(document.querySelector(".carousel-slider .item-pic3"),"index");
+        index=index-2<0?index-2+len:index-2;
+        this.curDot=index;
+      },
+      clickDot(event){
+        this.newArr=this._initcarouselArr(this.recommends);
+        let index=Number(getData(event.target,"index"))
+        for(let k=1;k<=index;k++){
+          this.newArr.unshift(this.newArr.pop())
+        }
+
+      },
+      //自动播放
+      _play(){
+        this.timer=setInterval(()=>{
+          if(this.t_play){
+            this.nextClick();
+          }
+        },4000)
       }
+    },
+    destroyed(){
+      clearInterval(this.timer)
     }
+
   }
 </script>
 
@@ -64,6 +177,7 @@
   #recommend .main-operate .slider-prev,
   #recommend .main-operate .slider-next {
     background-color: rgba(0, 0, 0, .1);
+    margin-top: -38px;
   }
   .carousel-slider {
     position: relative;
@@ -109,6 +223,12 @@
   }
   .carousel-slider .item-pic6 {
     transform: translate3d(896px,0,0) scale(0.81);
+  }
+  .carousel-slider .item-pic7 {
+    transform: translate3d(1120px,0,0) scale(0.81);
+  }
+  .carousel-slider .item-pic8 {
+    transform: translate3d(1344px,0,0) scale(0.81);
   }
   .carousel-slider .item img {
     width: 100%;

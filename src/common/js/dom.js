@@ -9,7 +9,7 @@ export function addClass(el, className) {
 export function removeClass(el,className) {
   if(!hasClass(el,className))
     return;
-
+  el.className = el.className.replace(" "+className,"");
 }
 
 export function hasClass(el, className) {
