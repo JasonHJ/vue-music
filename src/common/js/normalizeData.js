@@ -8,3 +8,16 @@ export function recommendData(data) {
   }
   return newData;
 }
+
+export function toplistData(data) {
+  let newData=[];
+  for(let k in data){
+    newData.push({
+      listname:data[k].ListName.substr(data[k].ListName.indexOf("·")+1),
+      songlist:data[k].songlist,
+      topid:data[k].topID,
+      url:`https://y.qq.com/n/yqq/toplist/${data[k].topID}.html?stat=y_new.index.toplist.detail${k-0+1}`
+    })
+  }
+  return newData;
+}

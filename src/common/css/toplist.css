@@ -1,0 +1,108 @@
+#rank { width: 100%; height: 830px; background-repeat: no-repeat; background-image: url(/static/image/cont/rank_bg.jpg); background-position: center 0%; }
+#rank .main-title .title i {
+  background-position: 0 -120px;
+}
+#rank .main-title .title i {
+  width: 144px;
+}
+#rank .readAll {
+  top: 128px;
+}
+.rank-list,
+.rank-list a {
+  color: #fff;
+}
+.rank-list__item {
+  overflow: hidden;
+  position: relative;
+  float: left;
+  width: 25%;
+  height: 568px;
+}
+.rank-bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url(/static/image/cont/rank_list_bg.jpg) no-repeat;
+
+  transition: all 0.4s;
+  -webkit-transition: all 0.4s;
+}
+.rank-list__item:hover .rank-bg {
+  transform: scale(1.07);
+  -webkit-transform: scale(1.07);
+}
+.rank-list__1 .rank-bg {
+  background-position: 0 0;
+}
+.rank-list__2 .rank-bg {
+  background-position: -300px 0;
+}
+.rank-list__3 .rank-bg {
+  background-position: -600px 0;
+}
+.rank-list__4 .rank-bg {
+  background-position: -900px 0;
+}
+.rank-list__item .mask {}
+.rank-list__item:hover .mask {}
+.rank-list__item .icon-play {
+  top: 187px;
+  margin-top: 0;
+  cursor: pointer;
+}
+.rank-list__item:hover .icon-play {}
+.rank-list__item .title {
+  position: absolute;
+  top: 80px;
+  left: 50%;
+  width: 200px;
+  margin-left: -100px;
+  text-align: center;
+  cursor: pointer;
+}
+.rank-list__item .title i {
+  display: inline-block;
+  width: 65px;
+  height: 22px;
+  background: url(/static/image/main_title.png) no-repeat;
+  background-position: 0 -300px;
+}
+.rank-list__item .title h3 {
+  line-height: 54px;
+  font-size: 36px;
+}
+.rank-list__item .line {
+  position: absolute;
+  top: 215px;
+  left: 119px;
+  width: 62px;
+  height: 2px;
+  background-color: rgba(255, 255, 255, .3);
+}
+.rank-list__item:hover .line {
+  display: none;
+}
+.song-list {
+  position: absolute;
+  left: 60px;
+  bottom: 40px;
+}
+.song-list__item {
+  height: 45px;
+  margin-top: 10px;
+}
+.song-list__item a {
+  font-size: 16px;
+}
+.song-list__item a span {
+  padding-right: 6px;
+  font-size: 14px;
+  cursor:pointer;
+}
+.song-list__item > span {
+  padding-left: 15px;
+  line-height: 30px;
+  color: rgba(255, 255, 255, .5);
+  cursor:pointer;
+}
