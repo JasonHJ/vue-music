@@ -56,7 +56,6 @@
         getAllData().then((res)=>{
           if(res.code===ERR_OK){
             this.toplist=toplistData(res.data.toplist);
-            console.log(this.toplist)
           }
         })
       }

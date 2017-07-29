@@ -63,6 +63,15 @@
 .carousel-slider .item-pic8 {
   transform: translate3d(1344px,0,0) scale(0.81);
 }
+.carousel-slider .item-pic9 {
+  transform: translate3d(1568px,0,0) scale(0.81);
+}
+.carousel-slider .item-pic10 {
+  transform: translate3d(1792px,0,0) scale(0.81);
+}
+.carousel-slider .item-pic11 {
+  transform: translate3d(2016px,0,0) scale(0.81);
+}
 .carousel-slider .item img {
   width: 100%;
 }
