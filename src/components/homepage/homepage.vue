@@ -4,6 +4,7 @@
       <recommend></recommend>
       <toplist></toplist>
       <hotdiss></hotdiss>
+      <sbmv></sbmv>
     </div>
 </template>
 
@@ -12,13 +13,15 @@
   import Recommend from 'components/homepage/recommend'
   import Toplist from 'components/homepage/toplist'
   import Hotdiss from 'components/homepage/hotdiss'
+  import Sbmv from 'components/homepage/sbmv'
 
   export default {
     components:{
       NewSong,
       Recommend,
       Toplist,
-      Hotdiss
+      Hotdiss,
+      Sbmv
     }
   }
 </script>

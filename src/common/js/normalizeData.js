@@ -42,5 +42,27 @@ export function hotdiss(data){
   return newData;
 }
 function numberFormat(num) {
-  return (num/10000).toFixed(1)+'万'
+  let newNum;
+  if(num<10000)
+    return num;
+  newNum=(num/10000).toFixed(1)+'';
+  if(newNum.charAt(newNum.length-1)==='0')
+    newNum=newNum.substr(0,newNum.length-2);
+  newNum+='万';
+  return newNum;
+}
+
+export function sbmv(data) {
+  let newData=[]
+  for(let k in data){
+    newData.push({
+      listennum:numberFormat(data[k].listennum),
+      picurl:data[k].picurl,
+      mvtitle:data[k].mvtitle,
+      singer_name:data[k].singer_name,
+      singer_mid:`https://y.qq.com/n/yqq/singer/${data[k].singer_mid}.html`,
+      vid:`https://y.qq.com/n/yqq/mv/v/${data[k].vid}.html`
+    })
+  }
+  return newData;
 }
