@@ -3,9 +3,29 @@
 		<div class="header-top">
 			<a href="#" class="logo"></a>
 			<ul class="header-nav">
-				<li v-for="(item,index) in title" :title="item">
-					<a href="#" :class="{'header-nav_cur':index==0}">
-						{{item}}
+				<li>
+					<a href="https://y.qq.com/portal/profile.html" class="header-nav_cur">
+						音乐馆
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						我的音乐
+					</a>
+				</li>
+				<li>
+					<a href="https://y.qq.com/download/index.html" target="_blank">
+						客户端
+					</a>
+				</li>
+				<li>
+					<a href="https://y.qq.com/vip/daren_recruit/apply.html" target="_blank">
+						音乐号
+					</a>
+				</li>
+				<li>
+					<a href="https://y.qq.com/vipportal/"  target="_blank">
+						VIP
 					</a>
 				</li>
 			</ul>
@@ -46,7 +66,6 @@
 	export default {
 		data(){
 			return {
-				title:['音乐馆','我的音乐','下载客户端','VIP'],
 				hotkeys:[],
 				special_key:'',
 				special_url:'',

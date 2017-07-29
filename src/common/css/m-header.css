@@ -17,7 +17,7 @@
 }
 .header-nav {
   float: left;
-  margin: 0 29px 0 35px;
+  margin: 0 39px 0 25px;
 }
 .header-nav li {
   float: left;
@@ -25,7 +25,7 @@
 .header-nav li a {
   height: 90px;
   line-height: 90px;
-  padding: 0 20px;
+  padding: 0 15px;
   font-size: 18px;
 }
 .header-nav li a.header-nav_cur {
@@ -35,16 +35,17 @@
 .header-search {
   position: relative;
   float: left;
-  width: 248px;
+  width: 220px;
   height: 36px;
   margin-top: 26px;
   border: 1px solid #c9c9c9;
   border-radius: 3px;
   font-size: 0;
+  right:-25px;
 }
 .header-search .text {
   display: inline-block;
-  width: 212px;
+  width: 180px;
   height: 36px;
   padding-left: 14px;
   box-sizing: border-box;
@@ -148,6 +149,7 @@
 }
 .header-login a.login {
   width: 60px;
+  font-size:16px;
 }
 .header-login a.open-green {
   width: 115px;
